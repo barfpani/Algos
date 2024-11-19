@@ -2,16 +2,26 @@
 #include <stdlib.h>
 #define MAX 100
 
-//Creating stack with the help of arrays. (static Implementation) 
+//Creating stack and queue with the help of arrays. (static Implementation) 
 typedef struct Stack {
     int data[MAX];
     int top;
 } Stack;
 
-//Initializing out stack and setting the top at -1
+typedef struct queue{
+    int data[MAX];
+    int front;
+    int rear;
+}queue;
+
+//Initializing our stack and setting the top at -1, and for queue setting front and rear at -1 too
 
 void initStack(Stack* stack) {
     stack->top = -1;
+}
+void initqueue(queue* queue){
+    queue->front = -1;
+    queue->rear = -1;
 }
 
 //This function checks if stack is full or not
@@ -19,6 +29,7 @@ void initStack(Stack* stack) {
 int isFull(Stack* stack) {
     return stack->top == MAX - 1;
 }
+
 
 //This one checks if the stack is empty or not
 
