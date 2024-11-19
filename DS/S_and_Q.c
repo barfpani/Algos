@@ -3,23 +3,24 @@
 #define MAX 100
 
 //Creating stack and queue with the help of arrays. (static Implementation) 
-typedef struct Stack {
+typedef struct stack {
     int data[MAX];
     int top;
 } Stack;
 
-typedef struct queue{
+typedef struct Queue{
     int data[MAX];
     int front;
     int rear;
-}queue;
+}Queue;
 
-//Initializing our stack and setting the top at -1, and for queue setting front and rear at -1 too
+//Initializing our stack and setting the top at -1, and for queue setting front and rear at -1 too.
 
 void initStack(Stack* stack) {
     stack->top = -1;
 }
-void initqueue(queue* queue){
+
+void initqueue(Queue* queue){
     queue->front = -1;
     queue->rear = -1;
 }
@@ -30,6 +31,9 @@ int isFull(Stack* stack) {
     return stack->top == MAX - 1;
 }
 
+int isQFull(Queue* queue){
+    return queue->rear = MAX -1;
+}
 
 //This one checks if the stack is empty or not
 
@@ -37,7 +41,12 @@ int isEmpty(Stack* stack) {
     return stack->top == -1;
 }
 
+int isQEmpty(Queue* queue){
+    return queue->front == -1 || queue->front > queue->rear;
+}
+
 //Push function is used to add elements into the stack.
+//and Enqueue function is used to add elements in queue.
 
 void push(Stack* stack, int value) {
     if (isFull(stack)) {
@@ -47,7 +56,17 @@ void push(Stack* stack, int value) {
     stack->data[++stack->top] = value;
 }
 
-//The pop function is used to delete function from the stack
+void Enqueue(Queue* queue, int value ){
+    if(isQFull(queue)){
+        printff("Queue overflow\n");
+        return;
+    }
+    if (isEmpty(queue)) queue->front = 0;
+    queue->data[++queue->rear] = value;
+}
+
+//The pop function is used to delete element from the stack
+//and Dequeue function is used to delete element from the queue.
 
 int pop(Stack* stack) {
     if (isEmpty(stack)) {
@@ -55,6 +74,13 @@ int pop(Stack* stack) {
         return -1;
     }
     return stack->data[stack->top--];
+}
+int dequeue(Queue* queue){
+    if(isQEmpty(queue)){
+        printf("Queue underflow\n");
+        return -1;
+    }
+    return queue->data[queue->front++];
 }
 
 //Peek funtion is special...its like our "Pop" function but 
