@@ -1,3 +1,6 @@
+//In this file, I have implemented stack and Queue both, Queue was quite difficult to implement as compared to stack
+//so i have done another implementation exactly like this, but only for queue and with notes.
+
 #include <stdio.h>
 #include <stdlib.h>
 #define MAX 100
@@ -20,7 +23,7 @@ void initStack(Stack* stack) {
     stack->top = -1;
 }
 
-void initqueue(Queue* queue){
+void initQueue(Queue* queue){
     queue->front = -1;
     queue->rear = -1;
 }
@@ -32,7 +35,7 @@ int isFull(Stack* stack) {
 }
 
 int isQFull(Queue* queue){
-    return queue->rear = MAX -1;
+    return queue->rear == MAX -1;
 }
 
 //This one checks if the stack is empty or not
@@ -58,10 +61,10 @@ void push(Stack* stack, int value) {
 
 void Enqueue(Queue* queue, int value ){
     if(isQFull(queue)){
-        printff("Queue overflow\n");
+        printf("Queue overflow\n");
         return;
     }
-    if (isEmpty(queue)) queue->front = 0;
+    if (isQEmpty(queue)) queue->front = 0;
     queue->data[++queue->rear] = value;
 }
 
@@ -84,7 +87,8 @@ int dequeue(Queue* queue){
 }
 
 //Peek funtion is special...its like our "Pop" function but 
-//it returns the top most element without removing it
+//it returns the top most element without removing it,
+//Same goes for Front fucntion...but it is used for Queues.
 
 int peek(Stack* stack) {
     if (isEmpty(stack)) {
@@ -94,12 +98,27 @@ int peek(Stack* stack) {
     return stack->data[stack->top];
 }
 
+int front (Queue* queue){
+    if(isQEmpty(queue)){
+        printf("Queue is empty.\n");
+        return -1;
+    }
+    else{
+        return queue->data[queue->front];
+    }
+
+}
+
 int main() {
+
     Stack stack;
-    
-    //Initialzing our stack using our own function
+    Queue queue;
+
+    //Initialzing our stack and queue using our own function
 
     initStack(&stack);
+
+    initQueue(&queue);
     
     //Adding 10 and 20 into the stack...after pushing the 10 will be on bottom
     //and 20 on the top, bcz Stacks follows the principle of FILO and LIFO
@@ -107,10 +126,19 @@ int main() {
     push(&stack, 10);
     push(&stack, 20);
 
-    //Peeking the topmost element and removing that element from the stack
-    //in the nect step
+    Enqueue(&queue, 15);
+    Enqueue(&queue, 25);
 
+    //Peeking the topmost element and removing that element from the stack
+    //in the next step. 
+
+    printf("STACK\n");
     printf("Top Element: %d\n", peek(&stack));
     printf("Popped Element: %d\n", pop(&stack));
+    
+    printf("\nQUEUE\n");
+    printf("Top most Element: %d\n", front(&queue));
+    printf("Removed Element: %d\n", dequeue(&queue));
+
     return 0;
 }
