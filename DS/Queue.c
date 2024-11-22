@@ -2,7 +2,7 @@
 #include<stdlib.h>
 #define MAX 100
 
-//Making a struct for out queue. Using lists inside the struckt for out data to store in out queue
+//Making a struct for our queue, Using lists inside the struct for our data to store in our queue
 
 typedef struct Queue{
     int data[MAX];
@@ -10,7 +10,7 @@ typedef struct Queue{
     int rear;
 }Queue;                 //We're using just "Queue" instead of using "struct queue" to increase readanility
 
-//Initqueue fxn will initialize our queue and set its front and rear to -1
+//Initqueue function will initialize our queue and set its front and rear to -1
 
 void initQueue(Queue* queue){
     queue->front = -1;                  //there's a difference between "Queue" and "queue".
