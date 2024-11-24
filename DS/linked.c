@@ -1,11 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+//Creating structure for our node.
+
 typedef struct Node {
     int data;
     struct Node* prev;
     struct Node* next;
 } Node;
+
+//Inilizing out function which will create our node and setting it's "prev" and "next" to NULL.
 
 Node* createNode(int value) {
     Node* newNode = (Node*)malloc(sizeof(Node));
@@ -14,6 +18,8 @@ Node* createNode(int value) {
     newNode->next = NULL;
     return newNode;
 }
+
+//"insertAtEnd" function is pretty obvious, it will add elements into our linked list.
 
 void insertAtEnd(Node** head, int value) {
     Node* newNode = createNode(value);
@@ -29,7 +35,9 @@ void insertAtEnd(Node** head, int value) {
     newNode->prev = temp;
 }
 
-void printList(Node* head) {
+//printlist function will print our list from the head.
+
+void printlist(Node* head) {
     Node* temp = head;
     printf("Forward: ");
     while (temp != NULL) {
@@ -45,8 +53,10 @@ int main(){
     insertAtEnd(&head, 10);
     insertAtEnd(&head, 20);
     insertAtEnd(&head, 30);
+    insertAtEnd(&head, 40);
 
-    printList(head);
+
+    printlist(head);
 
     return 0;
 }
