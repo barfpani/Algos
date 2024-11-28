@@ -1,28 +1,36 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-//Creating structure for our node.
-
+// Define the structure for a linked list node
 typedef struct Node {
     int data;
-    struct Node* prev;
     struct Node* next;
 } Node;
 
-//Inilizing out function which will create our node and setting it's "prev" and "next" to NULL.
-
-Node* createNode(int value) {
+// Function to create a new node
+Node* createNode(int data) {
     Node* newNode = (Node*)malloc(sizeof(Node));
-    newNode->data = value;
-    newNode->prev = NULL;
+    if (!newNode) {
+        printf("Memory allocation failed\n");
+        return NULL;
+    }
+    newNode->data = data;
     newNode->next = NULL;
     return newNode;
 }
 
-//"insertAtEnd" function is pretty obvious, it will add elements into our linked list.
+// Function to insert a node at the beginning of the list
+void insertAtBeginning(Node** head, int data) {
+    Node* newNode = createNode(data);
+    if (!newNode) return;
+    newNode->next = *head;
+    *head = newNode;
+}
 
-void insertAtEnd(Node** head, int value) {
-    Node* newNode = createNode(value);
+// Function to insert a node at the end of the list
+void insertAtEnd(Node** head, int data) {
+    Node* newNode = createNode(data);
+    if (!newNode) return;
     if (*head == NULL) {
         *head = newNode;
         return;
@@ -32,14 +40,39 @@ void insertAtEnd(Node** head, int value) {
         temp = temp->next;
     }
     temp->next = newNode;
-    newNode->prev = temp;
 }
 
-//printlist function will print our list from the head.
+// Function to delete a node by value
+void deleteByValue(Node** head, int value) {
+    if (*head == NULL) {
+        printf("List is empty\n");
+        return;
+    }
+    Node* temp = *head;
 
-void printlist(Node* head) {
+    // If the node to be deleted is the head
+    if (temp->data == value) {
+        *head = temp->next;
+        free(temp);
+        return;
+    }
+
+    Node* prev = NULL;
+    while (temp != NULL && temp->data != value) {
+        prev = temp;
+        temp = temp->next;
+    }
+    if (temp == NULL) {
+        printf("Value not found in the list\n");
+        return;
+    }
+    prev->next = temp->next;
+    free(temp);
+}
+
+// Function to traverse the list and print its elements
+void traverseList(Node* head) {
     Node* temp = head;
-    printf("Forward: ");
     while (temp != NULL) {
         printf("%d -> ", temp->data);
         temp = temp->next;
@@ -47,16 +80,22 @@ void printlist(Node* head) {
     printf("NULL\n");
 }
 
-int main(){
+// Main function
+int main() {
     Node* head = NULL;
 
-    insertAtEnd(&head, 10);
-    insertAtEnd(&head, 20);
+    // Insert elements
+    insertAtBeginning(&head, 10);
+    insertAtBeginning(&head, 20);
     insertAtEnd(&head, 30);
-    insertAtEnd(&head, 40);
 
+    printf("Linked List after insertion: ");
+    traverseList(head);
 
-    printlist(head);
+    // Delete an element
+    deleteByValue(&head, 20);
+    printf("Linked List after deletion: ");
+    traverseList(head);
 
     return 0;
 }
