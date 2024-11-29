@@ -42,34 +42,6 @@ void insertAtEnd(Node** head, int data) {
     temp->next = newNode;
 }
 
-// Function to delete a node by value
-void deleteByValue(Node** head, int value) {
-    if (*head == NULL) {
-        printf("List is empty\n");
-        return;
-    }
-    Node* temp = *head;
-
-    // If the node to be deleted is the head
-    if (temp->data == value) {
-        *head = temp->next;
-        free(temp);
-        return;
-    }
-
-    Node* prev = NULL;
-    while (temp != NULL && temp->data != value) {
-        prev = temp;
-        temp = temp->next;
-    }
-    if (temp == NULL) {
-        printf("Value not found in the list\n");
-        return;
-    }
-    prev->next = temp->next;
-    free(temp);
-}
-
 // Function to traverse the list and print its elements
 void traverseList(Node* head) {
     Node* temp = head;
@@ -93,7 +65,7 @@ int main() {
     traverseList(head);
 
     // Delete an element
-    deleteByValue(&head, 20);
+    
     printf("Linked List after deletion: ");
     traverseList(head);
 
