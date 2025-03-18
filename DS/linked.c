@@ -1,15 +1,25 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+/*This is the basic struct of a linked list, it has a data 
+variable which will store the value of this node, and "next"
+is the pointer to the next node, it points to another node
+that's why it is "Node*" */
+
 typedef struct Node{
     int data;
     struct Node* next;
 }Node;
 
+/*In this function we're using malloc to allocate
+a specific amount of memory to use, it's data type is Node*
+aswell bcz it's returning the memory address of the
+allocated mode.*/
+
 Node* createnode(int data){
-    Node* newNode = malloc(sizeof(Node));
-        if(!newNode){
-            printf("Memomry allocation failed");
+    Node* newNode = malloc(sizeof(Node));        //"newNode" variable stores the address of the allocated node.
+        if(!newNode){                            // <--- this statemetn is used as a failsafe if the allocation fails.  
+            printf("Memomry allocation failed"); //further explaination is in my handwritten notes(Only I have them :) ).
             return 0;
         }
 
@@ -18,13 +28,16 @@ Node* createnode(int data){
         return newNode; 
 }
 
+/*we have used the concept of double pointes
+to change the value of the head pointer, */
+
 int insert_at_front(Node** head, int data){
     Node* newNode = createnode(data);
     if(!newNode){
         return 0;
     }
-    newNode -> next = *head;
-    *head = newNode;
+    newNode -> next = *head;           //Here, we're assigning the "newNode's" next variable the address of the current head.
+    *head = newNode;                   //And here we're decalring the "newNode" as the new head of the linked list.
     return 0;
 }
 
