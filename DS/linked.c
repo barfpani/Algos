@@ -41,6 +41,11 @@ int insert_at_front(Node** head, int data){
     return 0;
 }
 
+/*Insert at back is quiet simple in singly linked list
+we just have to traverse the list until "next" variable gets NULL
+adn after that, add the address of the newnode into the "next"
+and set the "newNode's" next at NULL*/
+
 int insert_at_back(Node** head,int data){
     Node* newNode = createnode(data);
     if(!newNode)return 0;
@@ -56,33 +61,40 @@ int insert_at_back(Node** head,int data){
     return 0;
 }
 
+/*In Delete_by_value method there are two cases,
+1) if the element is the head
+2) element is not in the list*/
+
 void delete_by_value(Node** head, int value){
     if(*head == NULL){
         printf("List is empty\n");
         return;
     }
     
-    Node* temp = *head;
-    if(temp -> data == value){
-        *head = temp -> next;
-        free(temp);
-        return;
+    Node* temp = *head;                         //here is the 1st case, we have created a temp pointer which stores the
+    if(temp -> data == value){                  //address of the head Node, the logic is if the "data" of the head node
+        *head = temp -> next;                   //is the value which we want to delete? then the next node is assigned 
+        free(temp);                             // as the new head node and the old node which is accessible by the "temp"
+        return;                                 // is freed from the memory using free() function.
     }
     
-    Node *prev = NULL;
+    Node *prev = NULL;                                  //here we have created a NULL pointer 
 
-    while(temp != NULL && temp -> data != value){
-        prev = temp;
-        temp = temp -> next;
+    while(temp != NULL && temp -> data != value){       // we have two pointers, "temp" and "prev" they both will traverse 
+        prev = temp;                                    // alongside the entire list, ex = if the "prev" is at node 3,
+        temp = temp -> next;                            // then "temp" will be at node 4, 
     }
     if(temp == NULL){
-        printf("Element not found\n");
-        return;
+        printf("Element not found\n");                  // if the temp reaches at NULL and the element is still not found?
+        return;                                         // then the element is not present in the list
     }
-    prev -> next = temp -> next;
-    free(temp);
-    return;
+    prev -> next = temp -> next;                        // After finding the element, logic = set the "next" variable of the node at which
+    free(temp);                                         // "prev" pointer points, equal to the "next" variable of the node at which "temp"
+    return;                                             // pointer points, after this, free the node at which "temp" points using freee function.
 }
+
+/*A very simple fucntion, using while loop.
+Logic = Print evemry element until temp is Equal to NULL*/
 
 void traverse_list(Node** head){
     Node* temp = *head;
