@@ -19,7 +19,7 @@ allocated mode.*/
 Node* createnode(int data){
     Node* newNode = malloc(sizeof(Node));        //"newNode" variable stores the address of the allocated node.
         if(!newNode){                            // <--- this statemetn is used as a failsafe if the allocation fails.  
-            printf("Memomry allocation failed"); //further explaination is in my handwritten notes(Only I have them :) ).
+            printf("Memomry allocation failed"); //further explaination is in my handwritten notes(Only I have them :3 ).
             return 0;
         }
 
@@ -36,8 +36,8 @@ int insert_at_front(Node** head, int data){
     if(!newNode){
         return 0;
     }
-    newNode -> next = *head;           //Here, we're assigning the "newNode's" next variable the address of the current head.
-    *head = newNode;                   //And here we're decalring the "newNode" as the new head of the linked list.
+    newNode -> next = *head;           //<--- Here, we're assigning the "newNode's" next variable the address of the current head.
+    *head = newNode;                   //<--- And here we're decalring the "newNode" as the new head of the linked list.
     return 0;
 }
 
@@ -71,24 +71,24 @@ void delete_by_value(Node** head, int value){
         return;
     }
     
-    Node* temp = *head;                         //here is the 1st case, we have created a temp pointer which stores the
+    Node* temp = *head;                         //<--- here is the 1st case, we have created a temp pointer which stores the
     if(temp -> data == value){                  //address of the head Node, the logic is if the "data" of the head node
         *head = temp -> next;                   //is the value which we want to delete? then the next node is assigned 
         free(temp);                             // as the new head node and the old node which is accessible by the "temp"
         return;                                 // is freed from the memory using free() function.
     }
     
-    Node *prev = NULL;                                  //here we have created a NULL pointer 
+    Node *prev = NULL;                                  //<--- here we have created a NULL pointer 
 
-    while(temp != NULL && temp -> data != value){       // we have two pointers, "temp" and "prev" they both will traverse 
+    while(temp != NULL && temp -> data != value){       //<--- we have two pointers, "temp" and "prev" they both will traverse 
         prev = temp;                                    // alongside the entire list, ex = if the "prev" is at node 3,
         temp = temp -> next;                            // then "temp" will be at node 4, 
     }
     if(temp == NULL){
-        printf("Element not found\n");                  // if the temp reaches at NULL and the element is still not found?
+        printf("Element not found\n");                  //<--- if the temp reaches at NULL and the element is still not found?
         return;                                         // then the element is not present in the list
     }
-    prev -> next = temp -> next;                        // After finding the element, logic = set the "next" variable of the node at which
+    prev -> next = temp -> next;                        //<--- After finding the element, logic = set the "next" variable of the node at which
     free(temp);                                         // "prev" pointer points, equal to the "next" variable of the node at which "temp"
     return;                                             // pointer points, after this, free the node at which "temp" points using freee function.
 }
