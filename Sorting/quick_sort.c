@@ -44,7 +44,7 @@ int main(){
     
     //Initializing array and other variables
 
-    int arr[] = {5, 9, 7, 3, 7, 6, 1, 8};
+    int arr[] = {10, 16, 8, 12, 15, 6, 3, 9, 5};
     int n = sizeof(arr)/ sizeof(arr[0]);
 
     
