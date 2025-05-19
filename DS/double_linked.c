@@ -99,7 +99,7 @@ void forward_traverse_list(Node* head){
         printf("List is empty\n");
     }
 
-    Node* temp = head;
+    Node* temp = head;                              // <-- This function is same as that of the singly linked list
 
     printf("NULL ");
 
@@ -117,16 +117,15 @@ void backward_traverse_list(Node* head){
         return;
     }
 
-    Node* temp = head;
-    while(temp != NULL && temp -> next != NULL){
-        temp = temp -> next;
-    }
-    
-    printf("NULL ");
+    Node* temp = head;                              // <-- the logic for backward traversing is to first reach
+    while(temp != NULL && temp -> next != NULL){    //  at the end of the list and then move forward and print 
+        temp = temp -> next;                        //  the elements until temp != NULL. this is a very unefficient
+    }                                               //  approach as we dont have the "Tail" ptr which points to the last node
+    printf("NULL ");                                //  otherwise we would've traversed directly.
 
-    while(temp != NULL){
-        printf(" <- %d -> ", temp -> data);
-        temp = temp -> back;
+    while(temp != NULL){                            //  Now when we reached at the end of the list, now we will move forward
+        printf(" <- %d -> ", temp -> data);         //  and print the elements until "temp != NULL"
+        temp = temp -> back;                        //  <-- to move backwards we use "back" pointer. 
     }
     printf("NULL\n");
 }
