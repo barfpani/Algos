@@ -133,7 +133,6 @@ void backward_traverse_list(Node* head){
 int main(){
     
     Node* head = NULL;
-    Node* tail = NULL;
 
     insert_at_front(&head, 25);
     insert_at_front(&head, 26);
