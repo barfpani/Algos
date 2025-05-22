@@ -25,10 +25,15 @@ int insert_at_front(Node** head, Node** tail, int value){
     if(!newnode){
         return -1; 
     }
-    newnode -> next = *head;
-    *head = newnode;
-    *tail = newnode;
-    
+    if(*head == NULL){
+        *head = *tail = newnode;
+        newnode -> next = newnode;
+    }
+    else{
+        newnode -> next = *head;
+        (*tail) -> next = newnode;
+        *head = newnode;
+    }
     return 0;
 }
 
@@ -53,34 +58,49 @@ int insert_at_back(Node** head, Node** tail, int value){
 
 int delete_by_value(Node** head, Node** tail, int value){
     if(*head == NULL){
-        printf("list is already empty");
+        printf("List is already empty\n");
         return -1;
     }
 
     Node* temp = *head;
-    if(temp -> data == value){
-        *head = temp -> next;
-        temp -> next = NULL;
-       free(temp);
+    // Case: value is in head
+    if(temp->data == value){
+        // Only one node
+        if(*head == *tail){
+            free(temp);
+            *head = *tail = NULL;
+            return 0;
+        }
+        *head = temp->next;
+        (*tail)->next = *head;
+        free(temp);
+        return 0;
     }
+
     Node* prev = NULL;
-    while(temp != NULL && temp -> data != value){
+    while(temp->next != *head && temp->data != value){
         prev = temp;
-        temp = temp ->next;
+        temp = temp->next;
     }
-    Node* temp_tail = *tail;
-    if(temp_tail -> data == value){
-        temp -> next = temp_tail -> next;
-        *tail = temp;
-        free(temp_tail);
-    }
-    if(temp == NULL){
-        printf("Element Not Found\n");
+
+    // If value not found
+    if(temp->data != value){
+        printf("Element not found\n");
         return -1;
     }
-    prev -> next = temp -> next;
-    temp -> next = NULL;
+
+    // Case: deleting tail
+    if(temp == *tail){
+        prev->next = *head;
+        *tail = prev;
+        free(temp);
+        return 0;
+    }
+
+    // General case
+    prev->next = temp->next;
     free(temp);
+    return 0;
 }
 
 void traverse_list(Node* head, Node* tail){
@@ -90,7 +110,7 @@ void traverse_list(Node* head, Node* tail){
     }
     Node* temp = head;
     printf("NULL ");
-    while(temp != NULL && temp == tail){
+    while(temp -> next == head && temp == tail){
         printf("%d -> ", temp -> data);
         temp = temp -> next;
     }
