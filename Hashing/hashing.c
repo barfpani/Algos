@@ -100,8 +100,8 @@ int main() {
     display();
 
     // Search for keys
-    printf("\nSearching for 'Alice': %s\n", search("Alice") ? "Found" : "Not Found");
-    printf("Searching for 'Zoe': %s\n", search("Zoe") ? "Found" : "Not Found");
+    printf("\nSearching for 'Sanchit': %s\n", search("Adya") ? "Found" : "Not Found");
+    printf("Searching for 'Rachit': %s\n", search("Saad") ? "Found" : "Not Found");
 
     // Free memory
     free_table();
