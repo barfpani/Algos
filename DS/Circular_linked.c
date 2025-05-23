@@ -49,9 +49,9 @@ int insert_at_back(Node** head, Node** tail, int value){
     }
     else{
         
-        newnode -> next = (*tail) -> next;
         (*tail) -> next = newnode;
         *tail = newnode;
+        newnode -> next = *head;
     }
     return 0;
 }
@@ -68,11 +68,13 @@ int delete_by_value(Node** head, Node** tail, int value){
         // Only one node
         if(*head == *tail){
             free(temp);
+            printf("%d -> Deleted Element.\n", temp -> data);
             *head = *tail = NULL;
             return 0;
         }
         *head = temp->next;
         (*tail)->next = *head;
+        printf("%d -> Deleted Element.\n", temp -> data);
         free(temp);
         return 0;
     }
@@ -93,28 +95,30 @@ int delete_by_value(Node** head, Node** tail, int value){
     if(temp == *tail){
         prev->next = *head;
         *tail = prev;
+        printf("%d -> Deleted Element.\n", temp -> data);    
         free(temp);
         return 0;
     }
 
     // General case
     prev->next = temp->next;
+    printf("%d -> Deleted Element.\n", temp -> data);
     free(temp);
     return 0;
 }
 
-void traverse_list(Node* head, Node* tail){
+void traverse_list(Node* head){
     if(head == NULL){
         printf("list is empty\n");
         return;
     }
     Node* temp = head;
-    printf("NULL ");
-    while(temp -> next == head && temp == tail){
+    printf("Head-> ");
+    while(temp -> next != head){
         printf("%d -> ", temp -> data);
         temp = temp -> next;
     }
-    printf(" Head\n");
+    printf("%d -> Head\n", temp -> data);
 }
 
 int main(){
@@ -122,18 +126,32 @@ int main(){
     Node* head = NULL;
     Node* tail = NULL;
 
-    insert_at_front(&head,& tail, 25);
-    insert_at_front(&head,& tail, 26);
-    insert_at_front(&head,& tail, 99);
-    insert_at_front(&head,& tail, 44);
-    insert_at_back(&head,&tail,  84);
+    insert_at_front(&head, &tail, 25);
+    insert_at_front(&head, &tail, 26);
+    insert_at_front(&head, &tail, 99);
+    insert_at_front(&head, &tail, 44);
+    insert_at_back(&head, &tail, 84);
     
-    traverse_list(head, tail);
-    
+    traverse_list(head);
 
+    delete_by_value(&head,& tail, 26);
+    traverse_list(head);
+    
+    delete_by_value(&head,& tail, 44);
+    traverse_list(head);
+    
+    delete_by_value(&head,& tail, 84);
+    traverse_list(head);
+    
+    delete_by_value(&head,& tail, 25);
+    traverse_list(head);
+    
     delete_by_value(&head,& tail, 99);
+    traverse_list(head);
 
-    traverse_list(head, tail);
+    delete_by_value(&head, &tail, 10);
+    traverse_list(head);
+
     
 
     return 0;
