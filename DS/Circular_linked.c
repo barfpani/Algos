@@ -117,20 +117,24 @@ void traverse_list(Node* head){
         printf("list is empty\n");
         return;
     }
-    Node* temp = head;                                          //  
-    printf("Head-> ");                                          //   
-    while(temp -> next != head){                                // 
-        printf("%d -> ", temp -> data);                         //   
-        temp = temp -> next;                                    // 
-    }                                                           // 
-    printf("%d -> Head\n", temp -> data);                       //
-}                                                               // 
+    Node* temp = head;                                          // <-- The "traverse_list" is a bit complicated, the "while"
+    printf("Head-> ");                                          // loop condition is, in normal list, we run the loop until   
+    while(temp -> next != head){                                // "temp != NULL" but this is the circular list, there is no "NULL"
+        printf("%d -> ", temp -> data);                         // so the new conditon will run the loop until the "temp" node's  
+        temp = temp -> next;                                    // "next" pointer points to "head" this is good, but we were unable to print
+    }                                                           // the last node as the print statement which prints the element, is inside the loop
+    printf("%d -> Head\n", temp -> data);                       // and bcz of this "loop" condtiion it does not enter the loop at the end, so we
+}                                                               // print the last element manually.
 
 int main(){
     
     Node* head = NULL;
     Node* tail = NULL;
 
+    /* Testing Block, adding elements and deleting them,
+    with every case. and priting the list after every deletion
+    to check if the deletion is done right. */
+    
     insert_at_front(&head, &tail, 25);
     insert_at_front(&head, &tail, 26);
     insert_at_front(&head, &tail, 99);
