@@ -1,9 +1,9 @@
 #include<stdio.h>
 
-//Initialization of function
+//Initialization of "linear_search" function
 
-int linear_search(int arr[], int size, int target){
-    for(int i = 0 ; i <= size; i++){
+int linear_search(int arr[], int size, int target){        //basic logic, traversing the array unit the value is found
+    for(int i = 0 ; i <= size; i++){                       // if the value is not found then that element is not in this list 
         if(arr[i] == target){
             return i;
         }
