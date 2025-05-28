@@ -1,12 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+//Struct of our tree.
+
 typedef struct Node {
     int data;
     struct Node* left;
     struct Node* right;
 } Node;
 
+// The "createNode" function is exactly like the linked lists function,
+// we just have to set the "left" and "right" instead of "next".
 
 Node* createNode(int data) {
     Node* newNode = (Node*)malloc(sizeof(Node));
@@ -20,6 +24,7 @@ Node* createNode(int data) {
     return newNode;
 }
 
+// This is the function which will add elements in our tree
 
 Node* insert(Node* root, int data) {
     if (root == NULL) {
