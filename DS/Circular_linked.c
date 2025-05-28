@@ -8,6 +8,8 @@ typedef struct Node{
     struct Node* next;
 }Node;
 
+// "CreateNode" function is same just like the regular linked list.
+
 Node* CreateNode(int value){
     Node* newnode = malloc(sizeof(Node));
     if(!newnode){
@@ -20,19 +22,24 @@ Node* CreateNode(int value){
     return newnode;
 }
 
+// "insert_at_front" is a bit different tho.
+
 int insert_at_front(Node** head, Node** tail, int value){
     Node* newnode = CreateNode(value);
     if(!newnode){
         return -1; 
     }
+
+    // The case if the list is empty
     if(*head == NULL){
         *head = *tail = newnode;
         newnode -> next = newnode;
     }
+        
     else{
-        newnode -> next = *head;
-        (*tail) -> next = newnode;
-        *head = newnode;
+        newnode -> next = *head;                // General case, if the list already has elements, after addinf the element at the front
+        (*tail) -> next = newnode;              // the "head" of the list's changes, so we have to update the "tail" node to point 
+        *head = newnode;                        // to the new "head".
     }
     return 0;
 }
@@ -43,15 +50,15 @@ int insert_at_back(Node** head, Node** tail, int value){
         return -1;
     }
 
-    if(*head == NULL){
+    if(*head == NULL){                          // This is again the case, if the list is empty.
         *head = *tail = newnode;
         newnode -> next = newnode;
     }
     else{
         
-        (*tail) -> next = newnode;
-        *tail = newnode;
-        newnode -> next = *head;
+        (*tail) -> next = newnode;              // <-- here we assign the current "tail" node's "next" pointer to point to the new node 
+        *tail = newnode;                        // as the element is added at the back, it's declared as the new "tail" and it's "next" pointer
+        newnode -> next = *head;                // is set to point the "head" node to maintain the cycle
     }
     return 0;
 }
@@ -63,48 +70,46 @@ int delete_by_value(Node** head, Node** tail, int value){
     }
 
     Node* temp = *head;
-    // Case: value is in head
-    if(temp->data == value){
-        // Only one node
-        if(*head == *tail){
-            free(temp);
-            printf("%d -> Deleted Element.\n", temp -> data);
-            *head = *tail = NULL;
-            return 0;
+                        
+    if(temp->data == value){                                    // <-- Here is the first case in which, if the element
+        if(*head == *tail){                                     // we want to delete is the head node, and it's structured 
+            free(temp);                                         // in an nested "if" to counter the case if the list only have  
+            printf("%d -> Deleted Element.\n", temp -> data);   // one element, then after deleting that node, "head" and "tail"
+            *head = *tail = NULL;                               // are set as NULL.
+            return 0;                                           
         }
-        *head = temp->next;
-        (*tail)->next = *head;
-        printf("%d -> Deleted Element.\n", temp -> data);
-        free(temp);
+        
+        *head = temp->next;                                     // General case of deletion of head element,
+        (*tail)->next = *head;                                  // almost like the regular linked list case,  
+        printf("%d -> Deleted Element.\n", temp -> data);       // but after deleting the "head" node ,the "tail"
+        free(temp);                                             // node is updated to point the new "head" node.
         return 0;
     }
 
-    Node* prev = NULL;
-    while(temp->next != *head && temp->data != value){
+    Node* prev = NULL;                                          // Using two pointers to traverse throught the list 
+    while(temp->next != *head && temp->data != value){          // just like the regular linked list. 
         prev = temp;
         temp = temp->next;
     }
 
-    // If value not found
-    if(temp->data != value){
+    if(temp->data != value){                                    // <-- Case of "Value not found"
         printf("Element not found\n");
         return -1;
     }
 
-    // Case: deleting tail
-    if(temp == *tail){
-        prev->next = *head;
-        *tail = prev;
-        printf("%d -> Deleted Element.\n", temp -> data);    
-        free(temp);
-        return 0;
+    if(temp == *tail){                                          // <-- Deletion of tail node, using a simple logic and    
+        prev->next = *head;                                     // using our two pointers for deletion, the "prev" pointer
+        *tail = prev;                                           // is just behind the "temp" pointer and "temp" needs to be freed,
+        printf("%d -> Deleted Element.\n", temp -> data);       // so we're just gonna change the "prev" node's "next" to point to 
+        free(temp);                                             // the "head" node and assign the "prev" as the new "tail" and free
+        return 0;                                               // the "temp =" node
     }
 
-    // General case
-    prev->next = temp->next;
-    printf("%d -> Deleted Element.\n", temp -> data);
-    free(temp);
-    return 0;
+    
+    prev->next = temp->next;                                    // <-- This is for the general case, to delete any element, 
+    printf("%d -> Deleted Element.\n", temp -> data);           // from anywhere from the list, except head and tail, these cases are
+    free(temp);                                                 // taken care of above.
+    return 0;                                                   
 }
 
 void traverse_list(Node* head){
@@ -112,20 +117,24 @@ void traverse_list(Node* head){
         printf("list is empty\n");
         return;
     }
-    Node* temp = head;
-    printf("Head-> ");
-    while(temp -> next != head){
-        printf("%d -> ", temp -> data);
-        temp = temp -> next;
-    }
-    printf("%d -> Head\n", temp -> data);
-}
+    Node* temp = head;                                          // <-- The "traverse_list" is a bit complicated, the "while"
+    printf("Head-> ");                                          // loop condition is, in normal list, we run the loop until   
+    while(temp -> next != head){                                // "temp != NULL" but this is the circular list, there is no "NULL"
+        printf("%d -> ", temp -> data);                         // so the new conditon will run the loop until the "temp" node's  
+        temp = temp -> next;                                    // "next" pointer points to "head" this is good, but we were unable to print
+    }                                                           // the last node as the print statement which prints the element, is inside the loop
+    printf("%d -> Head\n", temp -> data);                       // and bcz of this "loop" condtiion it does not enter the loop at the end, so we
+}                                                               // print the last element manually.
 
 int main(){
     
     Node* head = NULL;
     Node* tail = NULL;
 
+    /* Testing Block, adding elements and deleting them,
+    with every case. and priting the list after every deletion
+    to check if the deletion is done right. */
+    
     insert_at_front(&head, &tail, 25);
     insert_at_front(&head, &tail, 26);
     insert_at_front(&head, &tail, 99);
