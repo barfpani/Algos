@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// Define the structure for a BST node
+// Basic structer implementation for our "Binary Search Tree"
 typedef struct Node {
     int data;
     struct Node *left, *right;
