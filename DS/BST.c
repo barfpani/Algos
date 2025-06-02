@@ -24,9 +24,38 @@ Node* insert(Node* root, int data){
     }
 
     if(data < root -> data){
-        root -> left = createNode(data);
+        root -> left = insert(root, data);
     }
     else{
-        root
+        root -> right = insert(root, data);
     }
+    return root;
 }
+
+void inorder_traversal(Node* root){
+    if(root == NULL){
+        return;
+    }
+    inorder_traversal(root -> left);
+    printf("%d ", root -> data);
+    inorder_traversal(root -> right);
+}
+
+void preorder_traversal(Node* root){
+    if(root == NULL){
+        return;
+    }
+    printf("%d ", root -> data);
+    preorder_traversal(root -> left);
+    preorder_traversal(root -> right);
+}
+
+void postorder_traversal(Node* root){
+    if(root == NULL){
+        return;
+    }
+    postorder_traversal(root -> left);
+    postorder_traversal(root -> right);
+    printf("%d ",root -> data);
+}
+
