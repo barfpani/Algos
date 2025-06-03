@@ -32,6 +32,8 @@ Node* insert(Node* root, int data){
     return root;
 }
 
+//left , root , right
+
 void inorder_traversal(Node* root){
     if(root == NULL){
         return;
@@ -40,6 +42,8 @@ void inorder_traversal(Node* root){
     printf("%d ", root -> data);
     inorder_traversal(root -> right);
 }
+
+// root , left , right
 
 void preorder_traversal(Node* root){
     if(root == NULL){
@@ -50,6 +54,8 @@ void preorder_traversal(Node* root){
     preorder_traversal(root -> right);
 }
 
+// left , right , root
+
 void postorder_traversal(Node* root){
     if(root == NULL){
         return;
@@ -58,4 +64,66 @@ void postorder_traversal(Node* root){
     postorder_traversal(root -> right);
     printf("%d ",root -> data);
 }
+
+int searh (Node* root, int key){
+    if(root == NULL){
+        return;
+    }
+    if (root -> data == key){
+        return 1;
+    }
+    if(key < root -> data){
+        return(root -> left, key);
+    }
+    return(root -> right, key);
+}
+
+void freetree(Node* root){
+    if(root == NULL){
+        return;    
+    }
+    
+    freetree(root -> left);
+    freetree(root -> right);
+    freetree(root);
+}
+
+int main(){
+    
+    Node* root = NULL;
+
+    root = insert(root, 52);
+    root = insert(root, 85);
+    root = insert(root, 24);
+    root = insert(root, 45);
+    root = insert(root, 69);
+    root = insert(root, 96);
+    root = insert(root, 11);
+    root = insert(root, 36);
+    root = insert(root, 46);
+    root = insert(root, 78);
+
+    printf("In-Order Traversal: ");
+    inorder_traversal(root);
+    printf("\n");
+
+    printf("Pre-Order Traversal: ");
+    preorder_traversal(root);
+    printf("\n");
+
+    pritnf("Post-Order Traversal: ");
+    postorder_traversal(root);
+    printf("\n");
+
+    int key = 96;
+
+    if(search(root, key)){
+        printf("Eleme was found in the list.\n");
+    }
+    else{
+        printf("Element not found.\n");
+    }
+
+}   
+
 
