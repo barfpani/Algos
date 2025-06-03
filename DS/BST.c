@@ -1,102 +1,131 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// Basic structer implementation for our "Binary Search Tree"
-typedef struct Node {
+typedef struct node {
     int data;
-    struct Node *left, *right;
-} Node;
+    struct node* left;
+    struct node* right;
+}Node;
 
-// Function to create a new node
-Node* createNode(int value) {
-    Node *newNode = (Node *)malloc(sizeof(Node));
-    newNode->data = value;
-    newNode->left = NULL;
-    newNode->right = NULL;
+Node* createNode(int data){
+    Node* newNode = malloc(sizeof(Node));
+    if(!newNode){
+        printf("Memory Allocation Failed");
+        return 0;
+    }
+    newNode -> data = data;
+    newNode -> left = NULL;
+    newNode -> right = NULL;
     return newNode;
 }
 
-// Function to insert a value into the BST
-Node* insert(Node *root, int value) {
-    if (root == NULL) {
-        return createNode(value);
+Node* insert(Node* root, int data){
+    if(root == NULL){
+        return createNode(data);
     }
-    if (value < root->data) {
-        root->left = insert(root->left, value);
-    } else if (value > root->data) {
-        root->right = insert(root->right, value);
+
+    if(data < root -> data){
+        root -> left = insert(root -> left, data);
+    }
+    else{
+        root -> right = insert(root -> right, data);
     }
     return root;
 }
 
-// Function to search for a value in the BST
-int search(Node *root, int key) {
-    if (root == NULL) {
-        return 0; // Key not found
+//left , root , right
+
+void inorder_traversal(Node* root){
+    if(root == NULL){
+        return;
     }
-    if (key == root->data) {
-        return 1; // Key found
-    } else if (key < root->data) {
-        return search(root->left, key);
-    } else {
-        return search(root->right, key);
-    }
+    inorder_traversal(root -> left);
+    printf("%d ", root -> data);
+    inorder_traversal(root -> right);
 }
 
-// Function for in-order traversal of the BST
-void inOrderTraversal(Node *root) {
-    if (root != NULL) {
-        inOrderTraversal(root->left);
-        printf("%d ", root->data);
-        inOrderTraversal(root->right);
+// root , left , right
+
+void preorder_traversal(Node* root){
+    if(root == NULL){
+        return;
     }
+    printf("%d ", root -> data);
+    preorder_traversal(root -> left);
+    preorder_traversal(root -> right);
 }
 
-// Free the BST
-void freeTree(Node *root) {
-    if (root != NULL) {
-        freeTree(root->left);
-        freeTree(root->right);
-        free(root);
+// left , right , root
+
+void postorder_traversal(Node* root){
+    if(root == NULL){
+        return;
     }
+    postorder_traversal(root -> left);
+    postorder_traversal(root -> right);
+    printf("%d ",root -> data);
 }
 
-int main() {
-    Node *root = NULL;
+int search(Node* root, int key){
+    if(root == NULL){
+        return 0;
+    }
+    if (root -> data == key){
+        return 1;
+    }
+    if(key < root -> data){
+        return search(root -> left, key);
+    }
+    return search(root -> right, key);
+}
 
-    // Insert elements into the BST
-    root = insert(root, 50);
-    root = insert(root, 30);
-    root = insert(root, 70);
-    root = insert(root, 20);
-    root = insert(root, 40);
-    root = insert(root, 60);
-    root = insert(root, 80);
+void freetree(Node* root){
+    if(root == NULL){
+        return;    
+    }
 
-    // Print the in-order traversal (sorted order)
-    printf("In-order Traversal: ");
-    inOrderTraversal(root);
+    freetree(root -> left);
+    freetree(root -> right);
+    free(root);
+}
+
+int main(){
+    
+    Node* root = NULL;
+
+    root = insert(root, 52);
+    root = insert(root, 85);
+    root = insert(root, 24);
+    root = insert(root, 45);
+    root = insert(root, 69);
+    root = insert(root, 96);
+    root = insert(root, 11);
+    root = insert(root, 36);
+    root = insert(root, 46);
+    root = insert(root, 78);
+
+    printf("In-Order Traversal: ");
+    inorder_traversal(root);
     printf("\n");
 
-    // Search for values
-    int key = 40;
-    if (search(root, key)) {
-        printf("Key %d found in BST.\n", key);
-    } else {
-        printf("Key %d not found in BST.\n", key);
-    }
+    printf("Pre-Order Traversal: ");
+    preorder_traversal(root);
+    printf("\n");
 
-    key = 25;
-    if (search(root, key)) {
-        printf("Key %d found in BST.\n", key);
-    } else {
-        printf("Key %d not found in BST.\n", key);
-    }
+    printf("Post-Order Traversal: ");
+    postorder_traversal(root);
+    printf("\n");
 
-    // Free allocated memory
-    freeTree(root);
+    int key = 96;
+
+    if(search(root, key)){
+        printf("Element was found in the list.\n");
+    }
+    else{
+        printf("Element not found.\n");
+    }
 
     return 0;
-}
+}   
 
-//
+
