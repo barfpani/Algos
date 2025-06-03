@@ -16,6 +16,7 @@ Node* createNode(int data){
     newNode -> data = data;
     newNode -> left = NULL;
     newNode -> right = NULL;
+    return newNode;
 }
 
 Node* insert(Node* root, int data){
@@ -73,9 +74,9 @@ int search(Node* root, int key){
         return 1;
     }
     if(key < root -> data){
-        return(root -> left, key);
+        return search(root -> left, key);
     }
-    return(root -> right, key);
+    return search(root -> right, key);
 }
 
 void freetree(Node* root){
@@ -85,7 +86,7 @@ void freetree(Node* root){
 
     freetree(root -> left);
     freetree(root -> right);
-    freetree(root);
+    free(root);
 }
 
 int main(){
@@ -118,7 +119,7 @@ int main(){
     int key = 96;
 
     if(search(root, key)){
-        printf("Eleme was found in the list.\n");
+        printf("Element was found in the list.\n");
     }
     else{
         printf("Element not found.\n");
