@@ -24,10 +24,10 @@ Node* insert(Node* root, int data){
     }
 
     if(data < root -> data){
-        root -> left = insert(root, data);
+        root -> left = insert(root -> left, data);
     }
     else{
-        root -> right = insert(root, data);
+        root -> right = insert(root -> right, data);
     }
     return root;
 }
@@ -65,9 +65,9 @@ void postorder_traversal(Node* root){
     printf("%d ",root -> data);
 }
 
-int searh (Node* root, int key){
+int search(Node* root, int key){
     if(root == NULL){
-        return;
+        return 0;
     }
     if (root -> data == key){
         return 1;
@@ -82,7 +82,7 @@ void freetree(Node* root){
     if(root == NULL){
         return;    
     }
-    
+
     freetree(root -> left);
     freetree(root -> right);
     freetree(root);
@@ -111,7 +111,7 @@ int main(){
     preorder_traversal(root);
     printf("\n");
 
-    pritnf("Post-Order Traversal: ");
+    printf("Post-Order Traversal: ");
     postorder_traversal(root);
     printf("\n");
 
@@ -124,6 +124,7 @@ int main(){
         printf("Element not found.\n");
     }
 
+    return 0;
 }   
 
 
