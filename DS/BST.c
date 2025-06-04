@@ -7,9 +7,9 @@ typedef struct node {
     struct node* right;
 }Node;
 
-Node* createNode(int data){
-    Node* newNode = malloc(sizeof(Node));
-    if(!newNode){
+Node* createNode(int data){                                     // Similar "createNode" function using "malloc"
+    Node* newNode = malloc(sizeof(Node));                       // just like is linked list implementation.
+    if(!newNode){                                               // But instead of "next" we have "left" & "right"
         printf("Memory Allocation Failed");
         return 0;
     }
@@ -19,17 +19,17 @@ Node* createNode(int data){
     return newNode;
 }
 
-Node* insert(Node* root, int data){
-    if(root == NULL){
-        return createNode(data);
-    }
 
-    if(data < root -> data){
-        root -> left = insert(root -> left, data);
-    }
-    else{
-        root -> right = insert(root -> right, data);
-    }
+Node* insert(Node* root, int data){
+    if(root == NULL){                                           // 
+        return createNode(data);                                // 
+    }                                                           // 
+    if(data < root -> data){                                    // 
+        root -> left = insert(root -> left, data);              // 
+    }                                                           // 
+    else{                                                       // 
+        root -> right = insert(root -> right, data);            // 
+    }                                                           // 
     return root;
 }
 
