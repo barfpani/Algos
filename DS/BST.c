@@ -21,27 +21,27 @@ Node* createNode(int data){                                     // Similar "crea
 
 
 Node* insert(Node* root, int data){
-    if(root == NULL){                                           // 
-        return createNode(data);                                // 
-    }                                                           // 
-    if(data < root -> data){                                    // 
-        root -> left = insert(root -> left, data);              // 
-    }                                                           // 
-    else{                                                       // 
-        root -> right = insert(root -> right, data);            // 
-    }                                                           // 
+    if(root == NULL){                                           //   | We have used "recusive function" to insert element in a tree,
+        return createNode(data);                                //   | the logic for insertion is, first reach the node which doesn't
+    }                                                           //   | have childern, then then insert the new node to it's "left" or 
+    if(data < root -> data){                                    //   | "right" based on the case. Working -> imagine a call stack of same 
+        root -> left = insert(root -> left, data);              // <-| fucntions which will return differnt outputs, but there execution will 
+    }                                                           //   | be in stack order. Ex: If the tree is like 45 -> 23(L), 55(R) 23 -> 12(L), 30(R)
+    else{                                                       //   | 12  -> NULL(L), 26(R). and now if we insert "11", then it will validate the
+        root -> right = insert(root -> right, data);            //   | first "if" condition and keeps on going to the left side of the until "root == NULL"
+    }                                                           //   | when this condition is true? it will create and place a newNode at that NULL position.
     return root;
 }
 
 //left , root , right
 
-void inorder_traversal(Node* root){
-    if(root == NULL){
-        return;
-    }
-    inorder_traversal(root -> left);
-    printf("%d ", root -> data);
-    inorder_traversal(root -> right);
+void inorder_traversal(Node* root){                             //   |"Recursive Funtion" is again used here, the understanding of a call stack is important here
+    if(root == NULL){                                           //   | 
+        return;                                                 //   |      The Explainantio of this traversal function is in my handwritten notes,
+    }                                                           // <-|      as it includes step by step diagrams for better under stading, for a 
+    inorder_traversal(root -> left);                            //   |      a  basic idea? it's like a nested loop, or a good analogy, you're always 
+    printf("%d ", root -> data);                                //   |      in a bigger loop.
+    inorder_traversal(root -> right);                           //   | 
 }
 
 // root , left , right
