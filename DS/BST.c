@@ -33,27 +33,26 @@ Node* insert(Node* root, int data){
     return root;
 }
 
-//left , root , right
+//root , left , right
 
 void inorder_traversal(Node* root){                             //   |"Recursive Funtion" is again used here, the understanding of a call stack is important here
     if(root == NULL){                                           //   | 
-        return;                                                 //   |      The Explainantio of this traversal function is in my handwritten notes,
-    }                                                           // <-|      as it includes step by step diagrams for better under stading, for a 
-    inorder_traversal(root -> left);                            //   |      a  basic idea? it's like a nested loop, or a good analogy, you're always 
-    printf("%d ", root -> data);                                //   |      in a bigger loop.
+        return;                                                 //   |      The Explaination of this traversal function is in my handwritten notes,
+    }                                                           // <-|      as it includes step by step diagrams for better understading, for a 
+    printf("%d ", root -> data);                                //   |      a  basic idea? it's like a nested loop, or a good analogy, you're always 
+    inorder_traversal(root -> left);                            //   |      in a bigger loop. (Watch the video explanation in the recyce bin of WP).
     inorder_traversal(root -> right);                           //   | 
 }
 
-// root , left , right
-
-void preorder_traversal(Node* root){
-    if(root == NULL){
-        return;
-    }
-    printf("%d ", root -> data);
-    preorder_traversal(root -> left);
-    preorder_traversal(root -> right);
-}
+//left , root , right                                           //   | This function takes "root" as it's parameter, inside the function, if root is equal to NULL?
+void preorder_traversal(Node* root){                            //   | then it will return. In a hypothetical tree, let's say "10" is the root node. "10" is the input 
+    if(root == NULL){                                           //   | for this function, and "10" is != NULL so the function call itself after not entering the "if" 
+        return;                                                 //   | code block, while calling itself, it will take the "left" node of the "10" and again check if it 
+    }                                                           // <-| is == NULL or not, when it reaches the last node by keep doing this , it will again call itself 
+    preorder_traversal(root -> left);                           //   | and send the "left" of that last "node", but this time it has sent "NULL", as it's the "Last" 
+    printf("%d ", root -> data);                                //   | Node. The "if" statement will execute and the flow of execution will go from "52" -> "53", till
+    preorder_traversal(root -> right);                          //   | then it was going "52" -> "48", at line "53" it will print the "Root" node wiz the "Last" node,
+}                                                               //   | then again call itself and this time send "right" of that "Root" Node. This is the 1st pass.
 
 // left , right , root
 
