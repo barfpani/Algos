@@ -65,18 +65,18 @@ void postorder_traversal(Node* root){
     printf("%d ",root -> data);
 }
 
-int search(Node* root, int key){
-    if(root == NULL){
-        return 0;
-    }
-    if (root -> data == key){
-        return 1;
-    }
-    if(key < root -> data){
-        return search(root -> left, key);
-    }
-    return search(root -> right, key);
-}
+int search(Node* root, int key){                                //   |
+    if(root == NULL){                                           //   | After understanding how "Recursive Functions" work in traversal? Then all of this becomes 
+        return 0;                                               //   | piece ofc cake. the logic is simple like a "Linear Search" visit every element until we 
+    }                                                           //   | find the "key". What's changed is that the data is not in linear form. 
+    if (root -> data == key){                                   //   | WORKING -> A return based function, if the root == to NULL it'll return "0", and if the
+        return 1;                                               // <-| element is found then it will return "1". the traversal will be in the logic that if the
+    }                                                           //   | Key is smaller than the "data" of that node? it will move to the left tree, and if the 
+    if(key < root -> data){                                     //   | "key" is larger than the "head's " "data"? it ill move to the right tree. The "root == NULL"
+        return search(root -> left, key);                       //   | is the termination statement,for when the pointer reach the end of the tree.
+    }                                                           //   | 
+    return search(root -> right, key);                            
+}                                                                
 
 void freetree(Node* root){
     if(root == NULL){
@@ -92,6 +92,8 @@ int main(){
     
     Node* root = NULL;
 
+    // Inserting elements into the "Tree"
+
     root = insert(root, 52);
     root = insert(root, 85);
     root = insert(root, 24);
@@ -103,19 +105,29 @@ int main(){
     root = insert(root, 46);
     root = insert(root, 78);
 
+    // Traversal Block
+
+    //In-Order Traversal
+
     printf("In-Order Traversal: ");
     inorder_traversal(root);
     printf("\n");
 
+    //Pre-Order Traversal
+
     printf("Pre-Order Traversal: ");
     preorder_traversal(root);
     printf("\n");
+
+    //Post-Order Traversal
 
     printf("Post-Order Traversal: ");
     postorder_traversal(root);
     printf("\n");
 
     int key = 96;
+
+    //Searching Block
 
     if(search(root, key)){
         printf("Element was found in the list.\n");
