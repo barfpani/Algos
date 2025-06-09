@@ -18,7 +18,7 @@ void merge(int arr[], int left, int mid, int right){
   }
 
   //Merging two two sorted arrays into one'
-  int i = 0, int j = 0, int k = left;
+  int i = 0; int j = 0; int k = left;
   while(i < n1 && j < n2){
     if(L[i] <= R[j]){
       arr[k++] = L[i++];
@@ -44,16 +44,16 @@ void merge_sort(int arr[], int left, int right){
     int mid = left + (right - left) / 2;
     
   
-    merge_sort(arr[], left, mid);
-    merge_sort(arr[], mid + 1, right);
+    merge_sort(arr, left, mid);
+    merge_sort(arr, mid + 1, right);
 
     //merge the sorted arrays
-    merge(arr[], left, mid, right);
+    merge(arr, left, mid, right);
   }
 }
 
-// Printing array fucntion 
-void print_array(arr[], int size){
+// Printing array function 
+void print_array(int arr[], int size){
   for(int i = 0; i < size; i++){
     printf("%d ", arr[i]);
   }
@@ -66,12 +66,12 @@ int main(){
   int size = sizeof(arr) / sizeof(arr[0]);
 
   printf("Orginal Array\n");
-  print_array(arr[], size);
+  print_array(arr, size);
 
-  merge_sort(arr[], 0, size - 1);
+  merge_sort(arr, 0, size - 1);
 
-  printf("Sorted Array\n")
-  print_array(arr[] ,size);
+  printf("Sorted Array\n");
+  print_array(arr, size);
   
   return 0;
 }
