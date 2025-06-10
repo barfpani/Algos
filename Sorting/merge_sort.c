@@ -4,6 +4,8 @@
 // Function to merge two sorted array.
 
 void merge(int arr[], int left, int mid, int right){
+
+  // Variables which are used in managing array's lengths.
   int n1 = mid - left + 1;
   int n2 = right - mid;
 
@@ -21,9 +23,9 @@ void merge(int arr[], int left, int mid, int right){
   int i = 0; int j = 0; int k = left;
   while(i < n1 && j < n2){
     if(L[i] <= R[j]){
-      arr[k++] = L[i++];
-    }
-    else{
+      arr[k++] = L[i++];                      // These "++" after the variable "k" means post-incrementation.
+    }                                         // this could've been done after copying elements, but it's done 
+    else{                                     // now for more consiseness.
       arr[k++] = R[j++];
     }
   }
@@ -34,7 +36,7 @@ void merge(int arr[], int left, int mid, int right){
 
   // Copying remaining elements of R[], if any
   while(j < n2){
-    arr[k++] = L[j++];
+    arr[k++] = R[j++];
   }
 }
 
