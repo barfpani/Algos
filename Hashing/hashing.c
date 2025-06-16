@@ -5,7 +5,7 @@
 #define TABLE_SIZE 10
 
 typedef struct Hashnode{
-    char key;
+    char* key;
     int value;
     struct Hashnode *next;
 
@@ -17,7 +17,7 @@ unsigned int hash(char *str){
     unsigned long hash = 5381;
     int c;
 
-    while (c == *str++){
+    while ((c = *str++)){
         hash = hash * 33 + c;
     }
     return hash % TABLE_SIZE;
@@ -41,7 +41,7 @@ int search (char *key, int *outvalue){
 
     while (node != NULL){
         if(strcmp(node -> key, key) == 0){
-            outvalue = node -> value;
+            *outvalue = node -> value;
             return 1;
         }
         node = node -> next;
@@ -63,7 +63,7 @@ void free_table(){
 }
 
 void print_table(){
-    for(int i = 1; i < TABLE_SIZE; i++){
+    for(int i = 0; i < TABLE_SIZE; i++){
         printf("[%d]: ", i);
         Hashnode *node = hashtable[i];
         while(node){
