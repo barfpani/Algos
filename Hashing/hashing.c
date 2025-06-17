@@ -38,31 +38,30 @@ void insert (char *key, int value){                         //  | This function 
 
 
 
-int search (char *key, int *outvalue){
-    unsigned int index = hash(key);
-    Hashnode *node = hashtable[index];
-
-    while (node != NULL){
-        if(strcmp(node -> key, key) == 0){
-            *outvalue = node -> value;
-            return 1;
-        }
-        node = node -> next;
-    }
-    return 0;
+int search (char *key, int *outvalue){                      //  | 
+    unsigned int index = hash(key);                         //  | 
+    Hashnode *node = hashtable[index];                      //  | The Search function's logic is very simple, it takes a string and a value pointer, which will return 
+    while (node != NULL){                                   //  | the value of the key if founf in the table, and to finf elements in the chain, we have implememted a 
+        if(strcmp(node -> key, key) == 0){                  //  | simple while loop and it will run until it encounter NULL. inside if statement, if the strcmp (which
+            *outvalue = node -> value;                      //<-| compares two differnet strings) is true? which is 0, then the outvalue pointer will store the address of 
+            return 1;                                       //  | the value which is associated with that string and returns 1. else the node pointer will move forward.
+        }                                                   //  | and if the string is now found? it will return 0, This is a return type based function.  
+        node = node -> next;                                //  | 
+    }                                                       //  | 
+    return 0;                                               
 }
 
 
 
-void free_table(){
-    for (int i = 0; i < TABLE_SIZE; i++){
-        Hashnode *node = hashtable[i];
-        while(node){
-            Hashnode *temp = node;
-            node = node -> next;
-            free(temp -> key);
-            free(temp);
-        }
+void free_table(){                                          
+    for (int i = 0; i < TABLE_SIZE; i++){                   //  | The logic is simple, visit every index of the Table and Free is one by one, A simple "For", to traverse 
+        Hashnode *node = hashtable[i];                      //  | the table, node pointer which will access the nodes at the indexes, While loop's conditions is only "node"
+        while(node){                                        //  | bcz node will point to every index of the table, and at the end it traverse the linked list at that index,
+            Hashnode *temp = node;                          //  | so it will encounter a NULL, That's the while loop's termiantion logic. Nested loop logic is used here.
+            node = node -> next;                            //<-| inside while loop, a temp pointer is initialized to free the "key" and the entire node, the "temp" variable   
+            free(temp -> key);                              //  | is initialized again at every iteration, and gets free aswell. After the entire linked list is freed from 
+            free(temp);                                     //  | a paticular index? Them that index is initialized as NULL.
+        }                                                   //  | 
         hashtable[i] = NULL;
     }
 }
@@ -91,11 +90,11 @@ int main(){
     print_table();
 
     int value = 0;
-    if(search("Adya", &value)){
-        printf("Found Adya: %d\n", value);
+    if(search("Rachit", &value)){
+        printf("Found Rachit: %d\n", value);
     }
     else{
-        printf("Adya not found\n");
+        printf("Rachit not found\n");
     }
 
     free_table();
