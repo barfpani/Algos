@@ -1,10 +1,14 @@
 #include <stdio.h>
 
-// Heapify a subtree rooted with node i, size n
-void heapify(int arr[], int n, int i) {
-    int largest = i;         // Initialize largest as root
-    int left = 2 * i + 1;    // Left child
-    int right = 2 * i + 2;   // Right child
+/*In heap sort, we use the concept of Trees 
+to sort any array, the time complexity is 
+n(log n, for all worst, best and average case.)*/
+
+
+void heapify(int arr[], int n, int i) {                 // This is our main heapify function which will turn any array in a max heap, 
+    int largest = i;                                    // or a min heap. We're generation a max heap.  
+    int left = 2 * i + 1;                               // 
+    int right = 2 * i + 2;                              // 
 
     // If left child is larger than root
     if (left < n && arr[left] > arr[largest])
